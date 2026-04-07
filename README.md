@@ -66,6 +66,7 @@ Using the LibreChat documentation from Context7, the important constraints are:
 - The `modelSpecs` docs explicitly say that having a spec list disables `modelSelect`, `parameters`, and `presets` unless those are re-enabled in the `interface` object.
 - The `modelSpecs.prioritize` docs say that when set to `true`, a model spec is always selected in the UI and this may prevent users from selecting different endpoints for the selected spec.
 - The `modelSpecs.group` docs say that if the group matches an endpoint name, the spec appears nested under that endpoint in the selector menu.
+- The same `group` docs say that if the group is a custom name, LibreChat creates a separate collapsible section for those specs.
 
 In practice, this means our first goal should be to preserve the normal `Camer AI` endpoint model picker and keep the `Agents` and `Assistants` sections configured as their own product areas.
 
@@ -76,7 +77,7 @@ That is why the experimental overlay uses:
 - `interface.presets: true`
 - `modelSpecs.enforce: false`
 - `modelSpecs.prioritize: false`
-- `group: "Camer AI"` for every MoE model spec
+- custom groups such as `MoE Lab` and `MoE Specialists` instead of nesting the specs under `Camer AI`
 
 This is the best documented configuration path we found to try to expose both surfaces at once.
 

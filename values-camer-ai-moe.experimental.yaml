@@ -91,8 +91,9 @@ librechat:
       list:
         - name: "moe-orchestrator"
           label: "MoE Orchestrator"
-          group: "Camer AI"
-          description: "Primary coordinator that routes work across specialist models and synthesizes the final answer."
+          group: "MoE Lab"
+          groupIcon: "openAI"
+          description: "Best entry point for the experimental MoE flow. It coordinates the specialist presets and returns one final answer."
           preset:
             endpoint: "Camer AI"
             model: "qwen3-vl-30b-a3b-instruct"
@@ -116,8 +117,9 @@ librechat:
 
         - name: "moe-strategy"
           label: "Strategy Expert"
-          group: "Camer AI"
-          description: "Produces strong solution directions and trade-offs."
+          group: "MoE Specialists"
+          groupIcon: "openAI"
+          description: "Explores solution directions and trade-offs. Best when you want alternatives before implementation."
           preset:
             endpoint: "Camer AI"
             model: "kimi-k2.5"
@@ -133,8 +135,8 @@ librechat:
 
         - name: "moe-creative"
           label: "Creative Expert"
-          group: "Camer AI"
-          description: "Explores broader and unconventional alternatives."
+          group: "MoE Specialists"
+          description: "Generates wider and less conventional approaches when you want more exploration."
           preset:
             endpoint: "Camer AI"
             model: "cogito-671b-v2-p1"
@@ -150,8 +152,8 @@ librechat:
 
         - name: "moe-analysis"
           label: "Analysis Expert"
-          group: "Camer AI"
-          description: "Stress-tests ideas for feasibility, risks, and hidden assumptions."
+          group: "MoE Specialists"
+          description: "Critiques proposals for feasibility, risks, and hidden assumptions."
           preset:
             endpoint: "Camer AI"
             model: "deepseek-v3p2"
@@ -168,8 +170,8 @@ librechat:
 
         - name: "moe-vision"
           label: "Vision Expert"
-          group: "Camer AI"
-          description: "Best for multimodal tasks, UI critique, screenshots, and document-heavy reasoning."
+          group: "MoE Specialists"
+          description: "Best for multimodal tasks, screenshots, PDFs, and UI critique."
           preset:
             endpoint: "Camer AI"
             model: "qwen3-vl-30b-a3b-thinking"
@@ -184,8 +186,8 @@ librechat:
 
         - name: "moe-fast"
           label: "Fast Expert"
-          group: "Camer AI"
-          description: "Low-latency helper for quick drafting, summaries, and classification."
+          group: "MoE Specialists"
+          description: "Low-latency helper for quick drafting, summaries, and lightweight classification."
           preset:
             endpoint: "Camer AI"
             model: "qwen3-8b"
