@@ -3,6 +3,12 @@ librechat:
     version: 1.3.5
     cache: true
     fileStrategy: "local"
+    interface:
+      endpointsMenu: true
+      modelSelect: true
+      parameters: true
+      presets: true
+      agents: true
     endpoints:
       all:
         streamRate: 5
@@ -85,7 +91,7 @@ librechat:
       list:
         - name: "moe-orchestrator"
           label: "MoE Orchestrator"
-          group: "MoE"
+          group: "Camer AI"
           description: "Primary coordinator that routes work across specialist models and synthesizes the final answer."
           preset:
             endpoint: "Camer AI"
@@ -110,7 +116,7 @@ librechat:
 
         - name: "moe-strategy"
           label: "Strategy Expert"
-          group: "MoE Specialists"
+          group: "Camer AI"
           description: "Produces strong solution directions and trade-offs."
           preset:
             endpoint: "Camer AI"
@@ -127,7 +133,7 @@ librechat:
 
         - name: "moe-creative"
           label: "Creative Expert"
-          group: "MoE Specialists"
+          group: "Camer AI"
           description: "Explores broader and unconventional alternatives."
           preset:
             endpoint: "Camer AI"
@@ -144,7 +150,7 @@ librechat:
 
         - name: "moe-analysis"
           label: "Analysis Expert"
-          group: "MoE Specialists"
+          group: "Camer AI"
           description: "Stress-tests ideas for feasibility, risks, and hidden assumptions."
           preset:
             endpoint: "Camer AI"
@@ -162,7 +168,7 @@ librechat:
 
         - name: "moe-vision"
           label: "Vision Expert"
-          group: "MoE Specialists"
+          group: "Camer AI"
           description: "Best for multimodal tasks, UI critique, screenshots, and document-heavy reasoning."
           preset:
             endpoint: "Camer AI"
@@ -178,7 +184,7 @@ librechat:
 
         - name: "moe-fast"
           label: "Fast Expert"
-          group: "MoE Specialists"
+          group: "Camer AI"
           description: "Low-latency helper for quick drafting, summaries, and classification."
           preset:
             endpoint: "Camer AI"

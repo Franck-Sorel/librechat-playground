@@ -27,6 +27,12 @@ librechat:
     version: 1.3.5
     cache: true
     fileStrategy: "local"
+    interface:
+      endpointsMenu: true
+      modelSelect: true
+      parameters: true
+      presets: true
+      agents: true
     endpoints:
       all:
         streamRate: 5
