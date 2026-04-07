@@ -1,0 +1,157 @@
+replicaCount: 1
+
+global:
+  librechat:
+    existingSecretName: "librechat-credentials-env"
+    existingSecretApiKey: OPENAI_API_KEY
+    env:
+      - name: CAMER_AI_API_KEY
+        valueFrom:
+          secretKeyRef:
+            name: librechat-api-key
+            key: OPENAI_API_KEY
+  security:
+    allowInsecureImages: true
+
+librechat:
+  configEnv:
+    existingSecretName: "librechat-credentials-env"
+    MONGO_URI: "mongodb://mongodb.default.svc.cluster.local:27017/LibreChat"
+    ALLOW_REGISTRATION: "true"
+    ALLOW_EMAIL_LOGIN: "true"
+    SEARCH: "true"
+    MEILI_HOST: "http://librechat-meilisearch:7700"
+    NO_INDEX: "true"
+  registration: 
+  configYamlContent: |
+    version: 1.3.5
+    cache: true
+    fileStrategy: "local"
+    endpoints:
+      all:
+        streamRate: 5
+        titlePromptTemplate: |
+          ### Task:
+          Generate a concise 3-5 word title summarizing the conversation.
+
+          ### Rules:
+          - Match the main topic.
+          - Keep it short and clear.
+          - Use the chat's primary language.
+          - Avoid quotes and markdown.
+
+          ### Chat History:
+          Human: {input}
+          Assistant: {output}
+      agents:
+        recursionLimit: 30
+        maxRecursionLimit: 50
+        disableBuilder: false
+        maxCitations: 10
+        maxCitationsPerFile: 4
+        minRelevanceScore: 0.35
+      assistants:
+        disableBuilder: false
+        pollIntervalMs: 750
+        timeoutMs: 180000
+      custom:
+        - name: "Camer AI"
+          apiKey: "${CAMER_AI_API_KEY}"
+          baseURL: "https://api.ai.camer.digital/v1"
+          models:
+            default:
+              - "qwen3-8b"
+              - "qwen3-vl-30b-a3b-thinking"
+              - "qwen3-vl-30b-a3b-instruct"
+              - "qwen3-reranker-8b"
+              - "gemini-2.5-pro"
+              - "gemini-2.5-flash"
+              - "gemini-2.5-flash-lite"
+              - "gemini-3-flash"
+              - "gemini-3.1-pro"
+              - "gemini-3.1-flash-lite"
+              - "deepseek-v3p2"
+              - "kimi-k2.5"
+              - "kimi-k2-instruct-0905"
+              - "kimi-k2-thinking"
+              - "cogito-671b-v2-p1"
+            fetch: false
+
+          titleConvo: true
+          titleMethod: "completion"
+          titleModel: "qwen3-8b"
+          summarize: true
+          summaryModel: "qwen3-8b"
+          modelDisplayLabel: "Camer AI"
+          dropParams: ["stop", "user"]
+    fileConfig:
+      endpoints:
+        assistants:
+          fileLimit: 5
+          fileSizeLimit: 10
+          totalSizeLimit: 50
+          supportedMimeTypes:
+            - "image/.*"
+            - "application/pdf"
+        default:
+          totalSizeLimit: 20
+      serverFileSizeLimit: 100
+      avatarSizeLimit: 2
+    rateLimits:
+      fileUploads:
+        ipMax: 100
+        ipWindowInMinutes: 60
+        userMax: 50
+        userWindowInMinutes: 60
+
+image:
+  repository: danny-avila/librechat
+  registry: ghcr.io
+  pullPolicy: IfNotPresent
+  tag: ""
+
+podAnnotations:
+  namespace: "librechat"
+
+deploymentAnnotations:
+  namespace: "librechat"
+
+service:
+  type: ClusterIP
+  port: 3080
+  targetPort: 3080
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  hosts:
+    - host: chat.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+mongodb:
+  enabled: true
+  auth:
+    enabled: false
+  databases:
+    - LibreChat
+  image:
+    registry: registry-1.docker.io
+    repository: bitnamilegacy/mongodb
+    tag: "latest"   
+
+meilisearch:
+  enabled: true
+  persistence:
+    enabled: false
+  image:
+    tag: "v1.7.3"
+  auth:
+    existingMasterKeySecret: "librechat-credentials-env"
+
+redis:
+  enabled: false
