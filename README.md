@@ -90,6 +90,7 @@ This is still experimental. The LibreChat docs describe the individual behaviors
 Apply the required secrets first:
 
 ```bash
+kubectl create ns librechat
 kubectl apply -f librechat-credentials-env.example.yaml -n librechat
 kubectl apply -f librechat-api-key-secret.example.yaml -n librechat
 ```
@@ -104,14 +105,14 @@ If you want plain LibreChat without MoE presets:
 helm install mongodb bitnami/mongodb \
   --set auth.enabled=false \
   --set persistence.enabled=false \
-  -n default
+  -n librechat
 ```
 
 ```bash
 helm upgrade --install librechat oci://ghcr.io/danny-avila/librechat-chart/librechat \
   --set mongodb.enabled=false \
   --values values.yaml \
-  -n default
+  -n librechat
 ```
 
 ## Experimental Deployment With Camer AI + MoE
@@ -123,7 +124,7 @@ helm upgrade --install librechat oci://ghcr.io/danny-avila/librechat-chart/libre
   --set mongodb.enabled=false \
   --values values.yaml \
   --values values-camer-ai-moe.experimental.yaml \
-  -n default
+  -n librechat
 ```
 
 This overlay replaces the embedded `configYamlContent`, so keep the base file first and the experimental overlay second.
